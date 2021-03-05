@@ -31,7 +31,9 @@ const App = () => {
    */
   const handleInput = (event) => {
     event.preventDefault(); // this prevents the page from refreshing when the button is clicked
+    event.stopPropagation();
     // TODO: call setCurrTask and pass it the string the user inputed
+    setCurrTask(event.target.value)
   };
 
   /**
@@ -49,24 +51,19 @@ const App = () => {
       <div id="content">
         <ReactMarkdown source={app_background} />
         <Form>
-          <Form.Group controlId="form-input">
-            {/**
-             * TODO: pass 2 props to the FormControl element
-             * 1. placeholder (string) -> pass a string explaining what the input is for (ex: "Enter a task!")
-             * 2. onChange (function) -> pass one of the functions above that handles the user's input
-             */}
+          <Form.Group controlId="form-input" 
+          placeholder={"Enter a task!"} 
+          onChange={handleInput}>
             <FormControl />
             <InputGroup.Append>
-              {/** TODO: Add a prop & add some text to the button
-               * 1. onClick (function) -> pass one of the functions above that handles a task being added
-               * 2. Add text between the open and closing button tags, describing what the button should say
-               */}
-              <Button></Button>
+              <Button onClick={addTask}>"Add something you want to do"</Button>
             </InputGroup.Append>
           </Form.Group>
         </Form>
-        {/*using your tasks array, map through it and pass each task string to the Task component via the name prop*/}
-        {tasks.map((task) => {})}
+        {tasks.map((task) => (<div>
+          <Task name={task}/>
+          </div>
+          ))}
       </div>
     </div>
   );
